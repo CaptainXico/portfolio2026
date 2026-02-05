@@ -33,13 +33,29 @@
         material="opacity: 0.9; roughness: 1"
       ></a-plane>
 
+      <!-- PORTAL TO PROJECT 1 -->
+      <a-entity
+        id="portal-project1"
+        class="interactive"
+        position="0 1.6 -4"
+        portal="https://captainxico.github.io/SantaPopUp/"
+      >
+      <!-- Portal visual -->
+      <a-cylinder
+        radius="0.7"
+        height="2"
+        color="#00ffff"
+        material="opacity: 0.3; emissive: #00ffff; emissiveIntensity: 0.8"
+      ></a-cylinder>
 
-</a-entity>
-
-
-
-    
-
+      <!-- Portal text -->
+      <a-text
+        value="Enter Project 1"
+        align="center"
+        position="0 1.5 0"
+        color="#ffffff"
+      ></a-text>
+    </a-entity>
 
       <!-- Camera rig with controllers as children -->
       <a-entity id="camera-rig" player-jump>
