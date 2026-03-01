@@ -25,8 +25,6 @@ AFRAME.registerComponent('portal', {
     if (distance < this.data.radius) {
       this.triggered = true;
 
-      console.log("Entering portal:", this.data.url);
-
       setTimeout(() => {
         window.location.href = this.data.url;
       }, 100);
