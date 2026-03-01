@@ -26,11 +26,11 @@
         material="opacity: 0.9; roughness: 1"
       ></a-plane>
 
-      <!-- PORTAL TO PROJECT 1 -->
+      <!-- PORTAL TO SantaPopUp -->
       <a-entity
-        id="portal-project1"
+        id="portal-SantaPopUp"
         class="interactive"
-        position="0 1.6 -4"
+        position="2 1.6 -4"
         portal="url: https://captainxico.github.io/SantaPopUp/; radius: 1.2"
       >
       <!-- Portal visual -->
@@ -44,6 +44,30 @@
       <!-- Portal text -->
       <a-text
         value="Santa PopUp"
+        align="center"
+        position="0 1.5 0"
+        color="#ffffff"
+      ></a-text>
+    </a-entity>
+
+      <!-- PORTAL TO conway-2x-layer -->
+      <a-entity
+        id="portal-conway"
+        class="interactive"
+        position="0 1.6 -4"
+        portal="url: https://captainxico.github.io/conway-2x-layer/; radius: 1.2"
+      >
+      <!-- Portal visual -->
+      <a-cylinder
+        radius="0.7"
+        height="2"
+        color="#502473"
+        material="opacity: 0.3; emissive: #00ffff; emissiveIntensity: 0.8"
+      ></a-cylinder>
+
+      <!-- Portal text -->
+      <a-text
+        value="Conway's game of life 2 layers"
         align="center"
         position="0 1.5 0"
         color="#ffffff"
