@@ -29,7 +29,7 @@ AFRAME.registerComponent('portal', {
 
       setTimeout(() => {
         window.location.href = this.data.url;
-      }, 1000);
+      }, 100);
     }
   }
 });
