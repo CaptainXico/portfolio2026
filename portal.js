@@ -2,16 +2,17 @@
 
 AFRAME.registerComponent('portal', {
   schema: {
-    url: {type: 'string'},
-    radius: {type: 'number', default: 1.0}
+    url: { type: 'string' },
+    radius: { type: 'number', default: 1.2 }
   },
 
   init: function () {
     this.camera = document.querySelector('#camera');
+    this.triggered = false;
   },
 
   tick: function () {
-    if (!this.camera) return;
+    if (!this.camera || this.triggered) return;
 
     const portalPos = new THREE.Vector3();
     const cameraPos = new THREE.Vector3();
@@ -22,7 +23,11 @@ AFRAME.registerComponent('portal', {
     const distance = portalPos.distanceTo(cameraPos);
 
     if (distance < this.data.radius) {
-      window.location.href = this.data.url;
+      this.triggered = true;
+
+      setTimeout(() => {
+        window.location.href = this.data.url;
+      }, 100);
     }
   }
 });
