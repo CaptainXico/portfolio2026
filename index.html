@@ -74,6 +74,31 @@
       ></a-text>
     </a-entity>
 
+      <!-- PORTAL TO Horror Game -->
+      <a-entity
+        id="Horror-Game"
+        class="interactive"
+        position="-2 1.6 -4"
+        portal="url: https://captainxico.github.io/SnowyCemeteryHorrorGame/; radius: 1.2"
+      >
+      <!-- Portal visual -->
+      <a-cylinder
+        radius="0.7"
+        height="2"
+        color="#502473"
+        material="opacity: 0.3; emissive: #8b0000; emissiveIntensity: 0.8"
+      ></a-cylinder>
+
+      <!-- Portal text -->
+      <a-text
+        value="Snowy Horror game"
+        align="center"
+        position="0 1.5 0"
+        color="#ffffff"
+      ></a-text>
+    </a-entity>
+
+
       <!-- Camera rig with controllers as children -->
       <a-entity id="camera-rig" player-jump>
         <a-camera id="camera" position="0 1.6 0" look-controls="pointerLockEnabled: true">
