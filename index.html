@@ -13,9 +13,18 @@
   <body>
     
     <a-scene>
+      <audio id="ambient-sound" src="morning.mp3" preload="auto"></audio>
+
+      <a-entity
+        sound="src: #ambient-sound;
+        autoplay: true;
+        loop: true;
+        volume: 0.5;
+        positional: false">
+      </a-entity>
 
       <!-- Sky -->
-  <a-sky src="./lotus.jpg"></a-sky>
+      <a-sky src="./lotus.jpg"></a-sky>
 
       <!-- Floor -->
       <a-plane 
