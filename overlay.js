@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <div style="margin-bottom: 8px; font-weight: bold; color: #00ffff;">Controls:</div>
         <div style="margin-bottom: 4px;">🎮 <strong>WASD</strong> - Move</div>
         <div style="margin-bottom: 4px;">⬆️ <strong>Space</strong> - Jump</div>
-        <div style="margin-bottom: 4px;">🔄 <strong>Esc</strong> - Toggle POV/Cursor</div>
+        <div style="margin-bottom: 4px;">🔄 <strong>Esc</strong> - Leave POV</div>
+        <div style="margin-bottom: 4px;">🔄 <strong>click scene</strong> - Toggle Cursor</div>
     `;
     instructions.style.cssText = `
         line-height: 1.4;
