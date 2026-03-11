@@ -1,6 +1,16 @@
-// Overlay.js - Creates an instruction overlay in the left bottom of the screen
+/ Overlay.js - Creates an instruction overlay in the left bottom of the screen
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Detect if user is on PC/desktop (not mobile)
+    function isDesktop() {
+        return !(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                (window.innerWidth <= 768 && 'ontouchstart' in window));
+    }
+
+    // Only create overlay on desktop devices
+    if (!isDesktop()) {
+        return;
+    }
     // Create overlay container
     const overlay = document.createElement('div');
     overlay.id = 'instructions-overlay';
@@ -26,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
     instructions.innerHTML = `
         <div style="margin-bottom: 8px; font-weight: bold; color: #00ffff;">Controls:</div>
         <div style="margin-bottom: 4px;">🎮 <strong>WASD</strong> - Move</div>
-        <div style="margin-bottom: 4px;">⬆️ <strong>Space</strong> - Jump</div>
         <div style="margin-bottom: 4px;">🔄 <strong>Esc</strong> - Leave POV</div>
         <div style="margin-bottom: 4px;">🔄 <strong>click scene</strong> - Toggle POV</div>
     `;
