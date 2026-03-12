@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Position relative to camera (in front and slightly down)
         vrOverlayEntity.setAttribute('position', '0 1 -1');
-        vrOverlayEntity.setAttribute('rotation', '0 0 -20');
+        vrOverlayEntity.setAttribute('rotation', '-20 0 0');
         
         // Make it follow the camera
         vrOverlayEntity.setAttribute('look-at', '[camera]');
