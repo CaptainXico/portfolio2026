@@ -1,4 +1,4 @@
-/ Overlay.js - Creates an instruction overlay in the left bottom of the screen
+// Overlay.js - Creates an instruction overlay in the left bottom of the screen
 
 document.addEventListener('DOMContentLoaded', function() {
     // Detect if user is on PC/desktop (not mobile)
