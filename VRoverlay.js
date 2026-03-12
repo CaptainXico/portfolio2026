@@ -1,35 +1,18 @@
 // VRoverlay.js - Creates an instruction overlay for VR headsets
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Detect if user is in VR mode
-    function isVRMode() {
-        // Check if VR is supported and currently active
-        return navigator.xr && navigator.xr.isSessionSupported && 
-               document.querySelector('a-scene').is('vr-mode');
-    }
-
-    // Only create overlay when in VR mode
-    if (!isVRMode()) {
-        // Listen for VR mode changes
-        document.querySelector('a-scene').addEventListener('enter-vr', function() {
-            createVROverlay();
-        });
-        
-        document.querySelector('a-scene').addEventListener('exit-vr', function() {
-            removeVROverlay();
-        });
-        
-        return;
-    }
+    let vrOverlay = null;
 
     function createVROverlay() {
-        // Remove existing overlay if any
-        removeVROverlay();
+        // Don't create if already exists
+        if (vrOverlay) {
+            return;
+        }
 
         // Create overlay container
-        const overlay = document.createElement('div');
-        overlay.id = 'vr-instructions-overlay';
-        overlay.style.cssText = `
+        vrOverlay = document.createElement('div');
+        vrOverlay.id = 'vr-instructions-overlay';
+        vrOverlay.style.cssText = `
             position: fixed;
             bottom: 30px;
             left: 30px;
@@ -61,85 +44,88 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
 
         // Add instructions to overlay
-        overlay.appendChild(instructions);
+        vrOverlay.appendChild(instructions);
 
         // Add to body
-        document.body.appendChild(overlay);
-
-        // VR-specific hover effect using gaze detection
-        let gazeTimer;
-        
-        function startGazeHover() {
-            clearTimeout(gazeTimer);
-            gazeTimer = setTimeout(() => {
-                overlay.style.transform = 'scale(1.05)';
-                overlay.style.borderColor = 'rgba(0, 255, 255, 0.8)';
-            }, 1000);
-        }
-
-        function endGazeHover() {
-            clearTimeout(gazeTimer);
-            overlay.style.transform = 'scale(1)';
-            overlay.style.borderColor = 'rgba(0, 255, 255, 0.4)';
-        }
-
-        // Add gaze detection (simplified for VR)
-        overlay.addEventListener('mouseenter', startGazeHover);
-        overlay.addEventListener('mouseleave', endGazeHover);
+        document.body.appendChild(vrOverlay);
 
         // Auto-fade behavior for VR
         let fadeTimeout;
         
         function showOverlay() {
-            overlay.style.opacity = '1';
-            clearTimeout(fadeTimeout);
-            fadeTimeout = setTimeout(() => {
-                overlay.style.opacity = '0.4';
-            }, 15000); // Longer timeout for VR (15 seconds)
+            if (vrOverlay) {
+                vrOverlay.style.opacity = '1';
+                clearTimeout(fadeTimeout);
+                fadeTimeout = setTimeout(() => {
+                    if (vrOverlay) {
+                        vrOverlay.style.opacity = '0.4';
+                    }
+                }, 15000); // Longer timeout for VR (15 seconds)
+            }
         }
 
         // Show overlay when VR buttons are pressed
+        function handleVRInput() {
+            showOverlay();
+        }
+
+        // Add keyboard listeners for X/A buttons
         document.addEventListener('keydown', function(e) {
             if (['x', 'a', 'X', 'A'].includes(e.key)) {
-                showOverlay();
+                handleVRInput();
             }
         });
 
         // Listen for controller events
-        function handleControllerEvent() {
-            showOverlay();
-        }
-
-        // Add controller event listeners if available
         const leftController = document.querySelector('#left-controller');
         const rightController = document.querySelector('#right-controller');
         
         if (leftController) {
-            leftController.addEventListener('thumbstickmoved', handleControllerEvent);
-            leftController.addEventListener('buttondown', handleControllerEvent);
+            leftController.addEventListener('thumbstickmoved', handleVRInput);
+            leftController.addEventListener('buttondown', handleVRInput);
         }
         
         if (rightController) {
-            rightController.addEventListener('thumbstickmoved', handleControllerEvent);
-            rightController.addEventListener('buttondown', handleControllerEvent);
+            rightController.addEventListener('thumbstickmoved', handleVRInput);
+            rightController.addEventListener('buttondown', handleVRInput);
         }
 
         // Initial display
         showOverlay();
-
-        // Handle VR session end
-        document.querySelector('a-scene').addEventListener('exit-vr', removeVROverlay);
     }
 
     function removeVROverlay() {
-        const existingOverlay = document.getElementById('vr-instructions-overlay');
-        if (existingOverlay) {
-            existingOverlay.remove();
+        if (vrOverlay) {
+            vrOverlay.remove();
+            vrOverlay = null;
         }
     }
 
-    // Create overlay immediately if already in VR mode
-    if (isVRMode()) {
-        createVROverlay();
+    // Wait for A-Frame scene to be ready
+    function setupVRListeners() {
+        const scene = document.querySelector('a-scene');
+        if (!scene) {
+            setTimeout(setupVRListeners, 100);
+            return;
+        }
+
+        // Listen for VR mode changes
+        scene.addEventListener('enter-vr', function() {
+            console.log('Entered VR mode - creating VR overlay');
+            createVROverlay();
+        });
+        
+        scene.addEventListener('exit-vr', function() {
+            console.log('Exited VR mode - removing VR overlay');
+            removeVROverlay();
+        });
+
+        // Check if already in VR mode
+        if (scene.is('vr-mode')) {
+            createVROverlay();
+        }
     }
+
+    // Setup listeners after a short delay to ensure DOM is ready
+    setTimeout(setupVRListeners, 500);
 });
